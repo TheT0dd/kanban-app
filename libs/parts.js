@@ -15,7 +15,7 @@ exports.indexTemplate = function(options) {
       })
     ]
   };
-}
+};
 
 exports.loadJSX = function(include) {
   return {
@@ -30,7 +30,7 @@ exports.loadJSX = function(include) {
       ]
     }
   };
-}
+};
 
 exports.loadIsparta = function(include) {
   return {
@@ -44,7 +44,7 @@ exports.loadIsparta = function(include) {
       ]
     }
   };
-}
+};
 
 exports.lintJSX = function(include) {
   return {
@@ -58,7 +58,7 @@ exports.lintJSX = function(include) {
       ]
     }
   };
-}
+};
 
 exports.enableReactPerformanceTools = function() {
   return {
@@ -71,7 +71,7 @@ exports.enableReactPerformanceTools = function() {
       ]
     }
   };
-}
+};
 
 exports.devServer = function(options) {
   const ret = {
@@ -118,7 +118,7 @@ exports.devServer = function(options) {
   }
 
   return ret;
-}
+};
 
 exports.setupCSS = function(paths) {
   return {
@@ -132,7 +132,7 @@ exports.setupCSS = function(paths) {
       ]
     }
   };
-}
+};
 
 exports.minify = function() {
   return {
@@ -144,7 +144,7 @@ exports.minify = function() {
       })
     ]
   };
-}
+};
 
 exports.setFreeVariable = function(key, value) {
   const env = {};
@@ -155,7 +155,7 @@ exports.setFreeVariable = function(key, value) {
       new webpack.DefinePlugin(env)
     ]
   };
-}
+};
 
 exports.extractBundle = function(options) {
   const entry = {};
@@ -175,7 +175,7 @@ exports.extractBundle = function(options) {
       })
     ]
   };
-}
+};
 
 exports.clean = function(path) {
   return {
@@ -185,7 +185,7 @@ exports.clean = function(path) {
       })
     ]
   };
-}
+};
 
 exports.extractCSS = function(paths) {
   return {
@@ -204,7 +204,7 @@ exports.extractCSS = function(paths) {
       new ExtractTextPlugin('[name].[chunkhash].css')
     ]
   };
-}
+};
 
 exports.npmInstall = function(options) {
   options = options || {};
@@ -214,4 +214,4 @@ exports.npmInstall = function(options) {
       new NpmInstallPlugin(options)
     ]
   };
-}
+};
