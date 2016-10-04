@@ -18,6 +18,11 @@
     "semi": 1,
     "react/display-name": 0,
     "react/prop-types": 0,
-    "react/no-multi-comp": 0
+    "react/no-multi-comp": 0,
+    "react/jsx-no-bind": [1, {
+        "ignoreRefs": false,
+        "allowArrowFunctions": false,
+        "allowBind": false
+    }]
   }
 }
