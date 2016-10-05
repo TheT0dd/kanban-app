@@ -1,12 +1,18 @@
 import React from 'react';
+import classnames from 'classnames';
 
-const Editable = ({editing, value, onEdit, ...props}) => {
-    if (editing) {
+const Editable = ({editing, value, onEdit, className, ...props}) => {
+	if (editing) {
 		// {...props} - object spread operator
-        return <Editable.Edit value={value} onEdit={onEdit} {...props}/>;
-    }
+		return <Editable.Edit
+			className={classnames('edit', className)}
+			value={value}
+			onEdit={onEdit}
+			{...props}
+			/>;
+	}
 
-	return <Editable.Value value={value} />;
+	return <Editable.Value value={value} className={classnames('value', className)} />;
 };
 
 // Namespaced Component: Editable.Value
