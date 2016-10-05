@@ -19,7 +19,7 @@
     "react/display-name": 0,
     "react/prop-types": 0,
     "react/no-multi-comp": 0,
-    "react/jsx-no-bind": [1, {
+    "react/jsx-no-bind": [0, {
         "ignoreRefs": false,
         "allowArrowFunctions": false,
         "allowBind": false
