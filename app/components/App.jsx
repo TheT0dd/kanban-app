@@ -1,9 +1,9 @@
 import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
-import connect from '../libs/connect';
+import connect from 'connect-alt';
 
-
+@connect('NoteStore', ({ NoteStore: { notes } }) => ({ notes }))
 class App extends React.Component {
 
 	render() {
@@ -94,6 +94,4 @@ class App extends React.Component {
 }
 
 
-export default connect (
-	({notes}) => ({notes})
-)(App);
+export default App;
