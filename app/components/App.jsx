@@ -3,6 +3,13 @@ import uuid from 'uuid';
 import Notes from './Notes';
 import connect from 'connect-alt';
 
+// `connect-alt` decorator that connects component to stores
+//
+// The component will only listen to change events emitted
+// by the specified stores (1st param, maybe be more than
+// one separated by commas).
+// Second param is a reducer function that extracts data from
+// the store.
 @connect('NoteStore', ({ NoteStore: { notes } }) => ({ notes }))
 class App extends React.Component {
 
