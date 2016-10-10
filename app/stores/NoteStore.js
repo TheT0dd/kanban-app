@@ -8,15 +8,7 @@ export default class NoteStore {
 		this.bindActions(NoteActions);
 
 		// this will become the store state
-		this.notes = [
-			{
-				id: uuid.v4(),
-				task: 'Learn React'
-			}, {
-				id: uuid.v4(),
-				task: 'Do laundry!'
-			}
-		];
+		this.notes = [];
 	}
 
 	create(note) {
