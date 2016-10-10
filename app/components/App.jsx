@@ -1,7 +1,7 @@
 import React from 'react';
 import uuid from 'uuid';
-import Notes from './Notes';
-import NoteActions from '../actions/NoteActions';
+import Lanes from './Lanes';
+import LaneActions from '../actions/LaneActions';
 import connect from 'connect-alt';
 
 // `connect-alt` decorator that connects component to stores
@@ -14,29 +14,23 @@ import connect from 'connect-alt';
 //
 // Connecting a component to a store, means the selected store
 // state will be available to the component under `this.props`.
-@connect('NoteStore', ({ NoteStore: { notes } }) => ({ notes }))
+@connect('LaneStore', ({ LaneStore: { lanes } }) => ({ lanes }))
 class App extends React.Component {
 
 	render() {
-		const {notes} = this.props;
-
+		const {lanes} = this.props;
 		return (
 			<div>
-				<button className="add-note" onClick={this.addNote}>+</button>
-
-				<Notes
-					notes={notes}
-					onNoteClick={this.activateNoteEdit}
-					onEdit={this.editNote}
-					onDelete={this.deleteNote}
-					/>
+				<button className="add-lane" onClick={this.addLane}>+</button>
+				<Lanes lanes={lanes}/>
 			</div>
 		);
 	}
 
-	addNote = () => {
-		NoteActions.create({id: uuid.v4(), task: 'New task'});
+	addLane = () => {
+		LaneActions.create({id: uuid.v4(), task: 'New task'});
 	}
+
 
 	// Class Instance Field With an Arrow Function (ES8+)
 	//
@@ -52,27 +46,6 @@ class App extends React.Component {
 	// Even though this is supported by Babel, there’s a (small) risk that this feature could be
 	// taken out of the spec and require some refactoring, but a lot of people are using it so it
 	// seems likely that it’ll stay put.
-	deleteNote = (id, e) => {
-		// Avoid bubbling to edit
-		e.stopPropagation();
-
-		NoteActions.delete(id);
-	}
-
-	activateNoteEdit = (id) => {
-		NoteActions.update({
-			id, // ES6 shorthand property
-			editing: true
-		});
-	}
-
-	editNote = (id, task) => {
-		NoteActions.update({
-			id, 
-			task,
-			editing: false
-		});
-	}
 }
 
 
