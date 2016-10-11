@@ -18,7 +18,7 @@ const Editable = ({editing, value, onEdit, className, ...props}) => {
 // Namespaced Component: Editable.Value
 Editable.Value = ({value, ...props}) => <span {...props}>{value}</span>;
 
-// Namespaced Componens: Editable.Edit
+// Namespaced Component: Editable.Edit
 Editable.Edit = class Edit extends React.Component {
 	render() {
 		// ES7 - Rest operator in object destructuring

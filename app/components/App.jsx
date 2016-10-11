@@ -1,8 +1,8 @@
 import React from 'react';
-import uuid from 'uuid';
 import Lanes from './Lanes';
 import LaneActions from '../actions/LaneActions';
 import connect from 'connect-alt';
+import uuid from 'uuid';
 
 // `connect-alt` decorator that connects component to stores
 //
@@ -27,11 +27,6 @@ class App extends React.Component {
 		);
 	}
 
-	addLane = () => {
-		LaneActions.create({id: uuid.v4(), task: 'New task'});
-	}
-
-
 	// Class Instance Field With an Arrow Function (ES8+)
 	//
 	// This method works by setting deleteNote to an arrow function one time when
@@ -46,6 +41,10 @@ class App extends React.Component {
 	// Even though this is supported by Babel, there’s a (small) risk that this feature could be
 	// taken out of the spec and require some refactoring, but a lot of people are using it so it
 	// seems likely that it’ll stay put.
+
+	addLane = () => {
+		LaneActions.create({id: uuid.v4(), task: 'New task'});
+	}
 }
 
 

@@ -12,7 +12,9 @@ export default class LaneStore {
 		// default to an empty array.
 		lane.notes = lane.notes || [];
 
-		this.setState({lanes: this.lanes.concat(lane)});
+		this.setState({
+			lanes: this.lanes.concat(lane)
+		});
 	}
 
 	attachToLane({laneId, noteId}) {
