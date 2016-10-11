@@ -1,7 +1,11 @@
 import React from 'react';
-import {DragSource} from 'react-dnd';
+import {compose} from 'redux';
+import {DragSource, DropTarget} from 'react-dnd';
 import ItemTypes from '../constants/itemTypes';
 
+/**
+ * Implements the drag source contract.
+ */
 const noteSource = {
 	beginDrag(props) {
 		console.log('begin dragging note', props);
@@ -10,16 +14,29 @@ const noteSource = {
 	}
 };
 
-@DragSource(ItemTypes.NOTE, noteSource, (connect) => ({
-	connectDragSource: connect.dragSource()
-}))
+const noteTarget = {
+	hover(targetProps, monitor) {
+		const sourceProps = monitor.getItem();
+
+		console.log('dragging note', sourceProps, targetProps);
+	}
+};
+
 class Note extends React.Component {
 	render() {
-		const {connectDragSource, children, ...props} = this.props;
+		const {
+			// injected by ReactDnD
+			isDragging,
+			connectDragSource,
+			connectDropTarget,
+
+			children,
+			...props
+		} = this.props;
 
 		// In case we wanted to implement dragging based on a handle,
 		// we could apply connectDragSource only to a specific part of a Note.
-		return connectDragSource(
+		return compose(connectDragSource, connectDropTarget)(
 			<div {...props}>
 				{children}
 			</div>
@@ -27,6 +44,12 @@ class Note extends React.Component {
 	}
 }
 
-
-
-export default Note;
+export default compose(
+	DragSource(ItemTypes.NOTE, noteSource, (connect, monitor) => ({
+		connectDragSource: connect.dragSource(),
+		isDragging: monitor.isDragging()
+	})),
+	DropTarget(ItemTypes.NOTE, noteTarget, (connect, monitor) => ({
+		connectDropTarget: connect.dropTarget()
+	}))
+)(Note);
