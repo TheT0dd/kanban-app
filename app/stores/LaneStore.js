@@ -17,6 +17,27 @@ export default class LaneStore {
 		});
 	}
 
+	update(updatedLane) {
+		this.setState({
+			lanes: this.lanes.map(lane => {
+				if (lane.id === updatedLane.id) {
+					return Object.assign({}, lane, updatedLane);
+				}
+
+				return lane;
+			})
+		});
+	}
+
+	delete(id) {
+		// NOTE: we could also delete the notes belonging to the lane
+		// or we could leave them alone and even create a recycle bin
+		// based on orphaned notes
+		this.setState({
+			lanes: this.lanes.filter(lane => lane.id !== id)
+		});
+	}
+
 	attachToLane({laneId, noteId}) {
 		this.setState({
 			lanes: this.lanes.map(lane => {
