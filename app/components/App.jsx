@@ -1,6 +1,8 @@
 import React from 'react';
 import Lanes from './Lanes';
 import LaneActions from '../actions/LaneActions';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import connect from 'connect-alt';
 import uuid from 'uuid';
 
@@ -14,6 +16,7 @@ import uuid from 'uuid';
 //
 // Connecting a component to a store, means the selected store
 // state will be available to the component under `this.props`.
+@DragDropContext(HTML5Backend)
 @connect('LaneStore', ({ LaneStore: { lanes } }) => ({ lanes }))
 class App extends React.Component {
 
