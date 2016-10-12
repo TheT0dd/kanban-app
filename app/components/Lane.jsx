@@ -41,7 +41,7 @@ class Lane extends React.Component {
 		NoteActions.delete(noteId);
 	}
 
-	activateNoteEdit = id => {
+	activateNoteEdit = (id) => {
 		NoteActions.update({id, editing: true});
 	}
 }

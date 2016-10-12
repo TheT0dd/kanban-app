@@ -8,17 +8,21 @@ import ItemTypes from '../constants/itemTypes';
  */
 const noteSource = {
 	beginDrag(props) {
-		console.log('begin dragging note', props);
-
-		return {};
+		return {id: props.id};
 	}
 };
 
 const noteTarget = {
 	hover(targetProps, monitor) {
+		// target is the note that is being hovered upon
+		// source is the note being dragged over the target
+		const targetId = targetProps.id;
 		const sourceProps = monitor.getItem();
+		const sourceId = sourceProps.id;
 
-		console.log('dragging note', sourceProps, targetProps);
+		if (sourceId !== targetId) {
+			targetProps.onMove({sourceId, targetId});
+		}
 	}
 };
 
@@ -30,8 +34,7 @@ class Note extends React.Component {
 			connectDragSource,
 			connectDropTarget,
 
-			children,
-			...props
+			onMove, id, children, ...props
 		} = this.props;
 
 		// In case we wanted to implement dragging based on a handle,
@@ -46,10 +49,12 @@ class Note extends React.Component {
 
 export default compose(
 	DragSource(ItemTypes.NOTE, noteSource, (connect, monitor) => ({
+		// these properties are injected into the source note's props
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
 	})),
 	DropTarget(ItemTypes.NOTE, noteTarget, (connect, monitor) => ({
+		// these properties are injected into the target note's props
 		connectDropTarget: connect.dropTarget()
 	}))
 )(Note);
