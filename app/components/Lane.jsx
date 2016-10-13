@@ -6,7 +6,7 @@ import NoteActions from '../actions/NoteActions';
 import connect from 'connect-alt';
 
 
-@connect('NoteStore', ({ NoteStore: { notes } }) => ({ notes }))
+@connect('NoteStore', 'LaneStore', ({ NoteStore: { notes } }) => ({ notes }))
 class Lane extends React.Component {
 
 	render() {
@@ -47,7 +47,9 @@ class Lane extends React.Component {
 }
 
 function selectNotesByIds(allNotes, noteIds = []) {
-	return allNotes.filter(note => noteIds.includes(note.id));
+	return noteIds.reduce((notes, id) => (
+		notes.concat(allNotes.filter(note => note.id === id))
+	), []);
 }
 
 export default Lane;
