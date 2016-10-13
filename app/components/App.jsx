@@ -1,4 +1,5 @@
 import React from 'react';
+import {compose} from 'redux';
 import Lanes from './Lanes';
 import LaneActions from '../actions/LaneActions';
 import {DragDropContext} from 'react-dnd';
@@ -6,18 +7,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import connect from 'connect-alt';
 import uuid from 'uuid';
 
-// `connect-alt` decorator that connects component to stores
-//
-// The component will only listen to change events emitted
-// by the specified stores (1st param, maybe be more than
-// one separated by commas).
-// Second param is a reducer function that extracts data from
-// the store.
-//
-// Connecting a component to a store, means the selected store
-// state will be available to the component under `this.props`.
-@DragDropContext(HTML5Backend)
-@connect('LaneStore', ({ LaneStore: { lanes } }) => ({ lanes }))
+
 class App extends React.Component {
 
 	render() {
@@ -32,8 +22,8 @@ class App extends React.Component {
 
 	// Class Instance Field With an Arrow Function (ES8+)
 	//
-	// This method works by setting deleteNote to an arrow function one time when
-	// the component is created. Inside render and in other functions, this.deleteNote
+	// This method works by setting addLane to an arrow function one time when
+	// the component is created. Inside render and in other functions, this.addLane
 	// can be passed along without fear because the arrow function preserves the this binding.
 	//
 	// It is labelled “ES8+” because it’s not technically part of ES6 or ES7 (aka ES2016).
@@ -46,9 +36,19 @@ class App extends React.Component {
 	// seems likely that it’ll stay put.
 
 	addLane = () => {
-		LaneActions.create({id: uuid.v4(), task: 'New task'});
+		LaneActions.create({id: uuid.v4(), name: 'New Lane'});
 	}
 }
 
-
-export default App;
+export default compose(
+	DragDropContext(HTML5Backend),
+	// `connect-alt` higher order component that connects component to stores
+	//
+	// The component will only listen to change events emitted by the specified
+	// stores (1st param, maybe be more than one separated by commas).
+	// Last param is a reducer function that extracts data from the store.
+	//
+	// Connecting a component to a store, means the selected store state will be
+	// available to the component under `this.props`.
+	connect('LaneStore', ({ LaneStore: { lanes } }) => ({ lanes }))
+)(App);

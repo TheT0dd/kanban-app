@@ -30,19 +30,24 @@ class Note extends React.Component {
 	render() {
 		const {
 			// injected by ReactDnD
-			isDragging,
 			connectDragSource,
 			connectDropTarget,
+			isDragging,
+			isOver,
 
-			onMove, id, children, ...props
+			onMove, id, editing, children, ...props
 		} = this.props;
+
+		// Pass through if we are editing
+		const dragSource = editing ? a => a : connectDragSource;
 
 		// In case we wanted to implement dragging based on a handle,
 		// we could apply connectDragSource only to a specific part of a Note.
-		return compose(connectDragSource, connectDropTarget)(
-			<div {...props}>
-				{children}
-			</div>
+		return compose(dragSource, connectDropTarget)(
+			// inline style (passed as object)
+			<div style={{
+				opacity: isDragging || isOver ? 0 : 1
+			}} {...props}>{children}</div>
 		);
 	}
 }
@@ -55,6 +60,7 @@ export default compose(
 	})),
 	DropTarget(ItemTypes.NOTE, noteTarget, (connect, monitor) => ({
 		// these properties are injected into the target note's props
-		connectDropTarget: connect.dropTarget()
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver()
 	}))
 )(Note);

@@ -1,4 +1,7 @@
 import React from 'react';
+import {compose} from 'redux';
+import {DropTarget} from 'react-dnd';
+import ItemTypes from '../constants/itemTypes';
 import LaneHeader from './LaneHeader';
 import Notes from './Notes';
 import LaneActions from '../actions/LaneActions';
@@ -6,14 +9,13 @@ import NoteActions from '../actions/NoteActions';
 import connect from 'connect-alt';
 
 
-@connect('NoteStore', 'LaneStore', ({ NoteStore: { notes } }) => ({ notes }))
 class Lane extends React.Component {
 
 	render() {
 
-		const {lane, notes, ...props} = this.props;
+		const {connectDropTarget, lane, notes, ...props} = this.props;
 
-		return (
+		return connectDropTarget(
 			<div {...props}>
 				<LaneHeader lane={lane} />
 				<Notes
@@ -52,4 +54,28 @@ function selectNotesByIds(allNotes, noteIds = []) {
 	), []);
 }
 
-export default Lane;
+
+const noteTarget = {
+	hover(targetProps, monitor) {
+		const sourceProps = monitor.getItem();
+		const sourceId = sourceProps.id;
+
+		// If the target lane doesn't have notes,
+		// attach the note to it.
+		//
+		// `attachToLane` performs necessarly
+		// cleanup by default and it guarantees
+		// a note can belong only to a single lane
+		// at a time.
+		if (!targetProps.lane.notes.length) {
+			LaneActions.attachToLane({laneId: targetProps.lane.id, noteId: sourceId});
+		}
+	}
+};
+
+export default compose(
+	DropTarget(ItemTypes.NOTE, noteTarget, connect => ({
+		connectDropTarget : connect.dropTarget()
+	})),
+	connect('NoteStore', 'LaneStore', ({ NoteStore: { notes } }) => ({ notes }))
+)(Lane);

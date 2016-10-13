@@ -20,6 +20,7 @@ export default class Notes extends React.Component {
 					<Note
 						className="note"
 						id={id}
+						editing={editing}
 						onClick={onNoteClick.bind(null, id)}
 						onMove={this.onMove}>
 
