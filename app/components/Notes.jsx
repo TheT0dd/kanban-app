@@ -4,7 +4,7 @@ import Editable from './Editable';
 import LaneActions from '../actions/LaneActions';
 
 
-export default class Notes extends React.Component {
+class Notes extends React.Component {
 
 	render() {
 		const {
@@ -41,3 +41,18 @@ export default class Notes extends React.Component {
 		LaneActions.move({sourceId, targetId});
 	}
 }
+
+Notes.propTypes = {
+	notes: React.PropTypes.array,
+	onEdit: React.PropTypes.func,
+	onDelete: React.PropTypes.func,
+	onNoteClick: React.PropTypes.func
+};
+Notes.defaultProps = {
+	notes: [],
+	onEdit: () => {},
+	onDelete: () => {},
+	onNoteClick: () => {}
+};
+
+export default Notes;

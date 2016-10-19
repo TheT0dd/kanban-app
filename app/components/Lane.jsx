@@ -48,6 +48,20 @@ class Lane extends React.Component {
 	}
 }
 
+Lane.propTypes = {
+	lane: React.PropTypes.shape({
+		id: React.PropTypes.string.isRequired,
+		editing: React.PropTypes.bool,
+		name: React.PropTypes.string,
+		notes: React.PropTypes.array
+	}).isRequired,
+	connectDropTarget: React.PropTypes.func
+};
+Lane.defaultProps = {
+	name: '',
+	notes: []
+};
+
 function selectNotesByIds(allNotes, noteIds = []) {
 	return noteIds.reduce((notes, id) => (
 		notes.concat(allNotes.filter(note => note.id === id))

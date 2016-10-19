@@ -15,6 +15,17 @@ const Editable = ({editing, value, onEdit, className, ...props}) => {
 	return <Editable.Value value={value} className={classnames('value', className)} />;
 };
 
+Editable.propTypes = {
+	value: React.PropTypes.string,
+	editing: React.PropTypes.bool,
+	onEdit: React.PropTypes.func.isRequired
+};
+Editable.defaultProps = {
+	value: '',
+	editing: false,
+	onEdit: () => {}
+};
+
 // Namespaced Component: Editable.Value
 Editable.Value = ({value, ...props}) => <span {...props}>{value}</span>;
 

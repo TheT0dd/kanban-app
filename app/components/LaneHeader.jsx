@@ -74,4 +74,11 @@ class LaneHeader extends React.Component {
 	}
 }
 
+LaneHeader.propTypes = {
+	lane: React.PropTypes.shape({
+		editing: React.PropTypes.bool,
+		name: React.PropTypes.string
+	}).isRequired
+};
+
 export default LaneHeader;
